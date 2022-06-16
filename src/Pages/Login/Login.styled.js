@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import { Link } from 'react-router-dom'
 
 
 export const MainBackgroundContainer = styled.div`
@@ -35,14 +35,6 @@ border-radius: 0 30px 30px 0;
 background-color: #ffffff;
 display: flex;
 flex-direction: column;
-
-form{
-    width: 100%;
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 `
 
 export const TextContainer = styled.div`
@@ -63,13 +55,46 @@ p{
     margin-top: 0;
     font-size: 20px;
 }
+`
+
+export const FormDiv = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+
+form{
+    width: 70%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+`
+
+export const LowerDiv = styled.div`
+display: flex;
+width: 100%;
+margin: 5px 0;
+justify-content: space-between;
+margin-bottom: 30px;
+font-size: 14px;
+
+.rem{
+    display: flex;
+    align-items: center;
+
+    span{
+        margin-left: 3px;
+    }
+}
 
 `
 
-export const lowerDiv = styled.div`
-display: flex;
-justify-content: space-between;
-font-size: 16px;
-width: 60%;
-background-color: pink;
+export const ForgetPassword = styled(Link)`
+text-decoration: none;
+
+&:hover{
+    text-decoration: underline;
+}
 `

@@ -5,8 +5,8 @@ const checkBox = css`
     border: none;
     background-color: transparent;
     padding:0;
-    width: 20px;
-    color: black;
+    margin: 0;
+    width: auto;
 `
 
 const checkBoxStyle = (props) => {
@@ -20,12 +20,23 @@ border: 1px solid #C4C4C4;
 background-color: #FAFAFF;
 outline: none;
 border-radius: 5px;
-width: 60%;
+width: 100%;
 padding: 10px;
 font-size: 16px;
-margin-top: 30px;
+margin-top: 20px;
 
 ${checkBoxStyle}
 
 `
 
+export const InputContainer = styled.div`
+position: relative;
+width: 100%;
+
+span{
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+}
+
+`

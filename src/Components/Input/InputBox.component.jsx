@@ -1,16 +1,24 @@
 import React from "react";
-import { StyledInput } from "./InputBox.styled";
+import { InputContainer, StyledInput } from "./InputBox.styled";
 
 
-export const InputBox = ({placeholder, type, name, value}) => {
+export const InputBox = ({placeholder, type, name, value, children}) => {
 
     return (
-       <StyledInput 
-       className="form-input"
-       placeholder={placeholder}
-       type={type}
-       name={name}
-       value={value}
-       />        
+
+        <InputContainer>
+            <StyledInput 
+            className="form-input"
+            placeholder={placeholder}
+            type={type}
+            name={name}
+            value={value}
+            />
+            <span>
+                {children}
+            </span>
+        </InputContainer>
+       
+               
     )
 }
