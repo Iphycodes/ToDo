@@ -5,6 +5,7 @@ import { InputBox } from "../../Components/Input/InputBox.component";
 import { CustomButton } from "../../Components/CustomButton/CustomButton.component";
 import { FcGoogle } from "react-icons/fc";
 import {BiTrendingDown} from 'react-icons/bi'
+import { CheckBox } from "../../Components/CheckBox/CheckBox.component";
 
 const Login = () => {
 
@@ -31,8 +32,10 @@ const Login = () => {
                             </InputBox>
                             <LowerDiv>
                                 <div className="rem">
-                                    <InputBox type='checkbox' name='remember'/>
-                                    <span>Remember me</span>
+                                    {/* <InputBox type='checkbox' name='remember'/>
+                                    <span>Remember me</span> */}
+
+                                    <CheckBox>Remember me</CheckBox>
                                 </div>
                                 <div className="fpsw">
                                    <ForgetPassword to='/google'>

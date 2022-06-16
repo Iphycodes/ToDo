@@ -35,8 +35,10 @@ width: 100%;
 
 span{
     position: absolute;
-    right: 2px;
-    bottom: 2px;
+    right: 5px;
+    bottom: 5px;
+    font-size: 20px;
 }
 
 `
+
