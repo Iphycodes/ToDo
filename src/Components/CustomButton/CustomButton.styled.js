@@ -4,6 +4,7 @@ const GoogleStyle = css`
     background-color: #ffffff;
     border: 1px solid #838383;
     color: #838383;
+    padding: 5px;
 `
 
 const GoogleButton = props => {

@@ -23,7 +23,7 @@ border-radius: 5px;
 width: 100%;
 padding: 10px;
 font-size: 16px;
-margin-top: 20px;
+margin-top: 10px;
 
 ${checkBoxStyle}
 

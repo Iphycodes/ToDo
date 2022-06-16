@@ -1,11 +1,12 @@
 import React from "react";
-import { AdvertContainer, ForgetPassword, FormContainer, FormDiv, LowerDiv, MainBackgroundContainer, MainContainer, TextContainer } from "./Login.styled";
+import { AdvertContainer, ForgetPassword, FormContainer, FormDiv, LowerDiv, MainBackgroundContainer, MainContainer, TextContainer, LastDiv } from "./Login.styled";
 import { Logo } from "../../Components/Logo/Logo.component";
 import { InputBox } from "../../Components/Input/InputBox.component";
 import { CustomButton } from "../../Components/CustomButton/CustomButton.component";
 import { FcGoogle } from "react-icons/fc";
 import {BiTrendingDown} from 'react-icons/bi'
 import { CheckBox } from "../../Components/CheckBox/CheckBox.component";
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -50,7 +51,9 @@ const Login = () => {
                             </CustomButton>
                         </form>
                     </FormDiv>
-                 
+                    <LastDiv>
+                        <p>Don't have an account yet? <Link to='google'>Sign Up</Link></p>
+                    </LastDiv>
               </FormContainer>
           </MainContainer>
         </MainBackgroundContainer>

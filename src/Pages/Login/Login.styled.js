@@ -90,11 +90,20 @@ font-size: 14px;
 }
 
 `
-
 export const ForgetPassword = styled(Link)`
 text-decoration: none;
 
 &:hover{
     text-decoration: underline;
+}
+`
+
+export const LastDiv = styled.div`
+width: 100%;
+align-self: flex-end;
+text-align: center;
+
+a{
+    text-decoration: none;
 }
 `
