@@ -38,6 +38,7 @@ span{
     right: 5px;
     bottom: 5px;
     font-size: 20px;
+    color: #C4C4C4;
 }
 
 `

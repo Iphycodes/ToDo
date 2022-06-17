@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { AdvertContainer, ForgetPassword, FormContainer, FormDiv, LowerDiv, MainBackgroundContainer, MainContainer, TextContainer, LastDiv } from "./Login.styled";
 import { Logo } from "../../Components/Logo/Logo.component";
 import { InputBox } from "../../Components/Input/InputBox.component";
 import { CustomButton } from "../../Components/CustomButton/CustomButton.component";
 import { FcGoogle } from "react-icons/fc";
-import {BiTrendingDown} from 'react-icons/bi'
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import {FaLock} from 'react-icons/fa'
 import { CheckBox } from "../../Components/CheckBox/CheckBox.component";
 import { Link } from "react-router-dom";
+import { AdvertPreview } from "../../Components/AdvertPreview/AdvertPreview.component";
 
 const Login = () => {
 
+    const [login, setLogin] = useState(false);
+
     return (
         <MainBackgroundContainer>
-          <MainContainer>
-              <AdvertContainer>
-
+          <MainContainer login={login}>
+              <AdvertContainer login={login}>
+                    <AdvertPreview/>
               </AdvertContainer>
-              <FormContainer>
-                    <TextContainer>
+              <FormContainer login={login}>
+
+                  {
+                      login ? (
+                          <>
+                          <TextContainer>
                         <Logo/>
                         <h1>Hello Again!</h1>
                         <p>Welcome to MajorTodo</p>
@@ -26,10 +34,10 @@ const Login = () => {
                     <FormDiv>
                         <form>
                             <InputBox placeholder='Email' type='email' name='email'>
-                                <BiTrendingDown/>
+                                <MdOutlineAlternateEmail/>
                             </InputBox>
                             <InputBox placeholder='Password' type='password' name='password'>
-                                <BiTrendingDown/>
+                                <FaLock/>
                             </InputBox>
                             <LowerDiv>
                                 <div className="rem">
@@ -52,8 +60,18 @@ const Login = () => {
                         </form>
                     </FormDiv>
                     <LastDiv>
-                        <p>Don't have an account yet? <Link to='google'>Sign Up</Link></p>
+                        <p>Don't have an account yet? <Link to='google'>Sign In</Link></p>
                     </LastDiv>
+                          </>
+                    
+                      ) : 
+                      <div>
+
+                      </div>
+
+                  }
+
+                    
               </FormContainer>
           </MainContainer>
         </MainBackgroundContainer>

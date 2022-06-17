@@ -2,9 +2,10 @@ import styled, { css } from "styled-components";
 
 const GoogleStyle = css`
     background-color: #ffffff;
-    border: 1px solid #838383;
+    border: 2px solid #E5E5E5;
     color: #838383;
-    padding: 5px;
+    padding: 8px;
+    
 `
 
 const GoogleButton = props => {
@@ -25,12 +26,14 @@ margin-bottom: 10px;
 display: flex;
 align-items: center;
 justify-content: center;
+margin-bottom: 15px;
 
 span{
-margin-left: 3px;
+margin-left: 5px;
 }
 
 .icon{
+    margin-right: 5px;
     font-size: 26px;
 }
 
