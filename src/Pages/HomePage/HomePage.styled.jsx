@@ -12,10 +12,17 @@ export const HomePageContainer = styled.div`
     padding: 50px;
 `
 
-export const HomePageTextContainer = styled.div`
+export const HomePageTextContainer = styled.div(({theme}) => `
+    
     width: 100%;
     text-align: center;
-`
+    margin-bottom: 50px;
+
+    h1{
+        color: ${theme.colors.green}
+    }
+
+`)
 
 export const TodoContainer = styled.div`
     width: 100%;
@@ -25,14 +32,16 @@ export const TodoContainer = styled.div`
     padding: 20px;
 `
 
-export const ShortLine = styled.hr(({theme}) => `
+export const ShortLine = styled.hr`
     width: 50px;
     background-color: black;
     margin: auto;
     height: 3px;
 
-    h1{
-        color: 
-    }
+`
 
-`)
+export const LongLine = styled(ShortLine)`
+    width: 95%;
+    height: 2px;
+    background-color: ${({theme}) => theme.colors.greyFont};
+`

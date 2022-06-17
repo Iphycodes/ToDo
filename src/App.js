@@ -2,10 +2,22 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./Pages/HomePage/HomePage.component";
 import Login from "./Pages/Login/Login.component";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./Theme/Theme.style";
+
+
+
 
 
 function App() {
+
+  const theme = {
+    colors: {
+      green: '#06D6A0',
+      inputColor: '#FAFAFF',
+      greyFont: '#838383',
+      redFont: 'red'
+  }
+  }
+
   return (
     <ThemeProvider theme={theme}>
     <div className="App">

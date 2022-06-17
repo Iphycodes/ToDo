@@ -23,9 +23,9 @@ const Login = () => {
               <FormContainer login={login}>
 
                   {
-                      login ? (
+                    login ? (
                           <>
-                          <TextContainer>
+                    <TextContainer>
                         <Logo/>
                         <h1>Hello Again!</h1>
                         <p>Welcome to MajorTodo</p>
@@ -60,13 +60,13 @@ const Login = () => {
                         </form>
                     </FormDiv>
                     <LastDiv>
-                        <p>Don't have an account yet? <Link to='google'>Sign In</Link></p>
+                        <p>Don't have an account yet? <span>Sign In</span></p>
                     </LastDiv>
                           </>
                     
                       ) : 
                       <div>
-
+                        
                       </div>
 
                   }
