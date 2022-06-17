@@ -25,7 +25,7 @@ export const TodoContainer = styled.div`
     padding: 20px;
 `
 
-export const ShortLine = styled.hr`
+export const ShortLine = styled.hr(({theme}) => `
     width: 50px;
     background-color: black;
     margin: auto;
@@ -34,4 +34,5 @@ export const ShortLine = styled.hr`
     h1{
         color: 
     }
-`
+
+`)
