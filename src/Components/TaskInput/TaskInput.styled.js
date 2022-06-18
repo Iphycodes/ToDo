@@ -4,6 +4,8 @@ import { css } from "styled-components";
 
 const hover = css`
 color: #079E77;
+box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+
 `
 
 // const hover = css(({theme}) => `

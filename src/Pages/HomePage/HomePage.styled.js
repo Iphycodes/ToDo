@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const HomePageContainer = styled.div`
     width: 80%;
     height: auto;
-    margin-top: 50px;
+    margin: 50px 0;
     background-color: #ffffff;
     border: none;
     display: flex;

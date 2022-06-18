@@ -18,13 +18,18 @@ background-color: #ffffff;
 border: 1px solid rgba(217, 217, 217, 0.7);
 border-left: 10px solid ${({theme}) => theme.colors.green};
 width: 100%;
-padding: 20px;
+padding: 10px;
 display: flex;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 5px;
 
-${getDoneStyle}
+${getDoneStyle};
+
+&:hover{
+    box-shadow: ${({isDone}) => !isDone ? '0px 2px 8px rgba(0, 0, 0, 0.15)' : 'none'};
+}
+
 `
 
 export const TaskItemDescription = styled.div`
@@ -51,14 +56,14 @@ align-items: center;
 `
 
 export const TaskItemIcon = styled.span`
-width: 50px;
-height: 50px;
+width: 40px;
+height: 40px;
 border-radius: 50%;
 box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 display: flex;
 justify-content: center;
 align-items: center;
 color: ${({category, theme}) => category === 'done' ? theme.colors.green : category === 'edit' ? theme.colors.blue : category === 'reiterate' ? theme.colors.blue : 'red'};
-font-size: ${({category}) => category === 'done' ? '40px' : '30px'};
+font-size: ${({category}) => category === 'done' ? '30px' : '20px'};
 
 `
