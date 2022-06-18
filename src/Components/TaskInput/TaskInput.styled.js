@@ -33,9 +33,13 @@ span:first-child{
 export const ButtonSpan = styled.span(({theme}) => `
     position: absolute;
     right: 3px;
-    bottom: -9px;
-    font-size: 45px;
+    bottom: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
     color: ${theme.colors.green};
+    border-radius: 50%;
 
 
     &:hover{

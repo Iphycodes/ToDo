@@ -46,6 +46,7 @@ export const TodoContainer = styled.div`
             letter-spacing: 10px;
             color: ${({theme}) => theme.colors.greyFont};
             font-weight: bold;
+            margin-bottom: 10px;
         }
     }
 `

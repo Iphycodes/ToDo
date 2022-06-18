@@ -1,8 +1,9 @@
 import React from "react";
 import { TaskItemBoxContainer, TaskItemDescription, TaskItemIcon, TaskItemIconsContainer } from "./TaskItemBox.styled";
-import { IoMdCheckmark } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+import { IoMdCheckmark, IoIosUndo } from "react-icons/io";
+import { MdDelete, MdUndo } from "react-icons/md";
 import { BsPencilFill } from "react-icons/bs";
+import {GrUndo} from 'react-icons/gr'
 
 export const TaskItemBox = ({description, time, isDone}) => {
 
@@ -14,12 +15,23 @@ export const TaskItemBox = ({description, time, isDone}) => {
             </TaskItemDescription>
 
             <TaskItemIconsContainer>
-                <TaskItemIcon category='done'>
+                {
+                    isDone ? 
+                    <>
+                    <TaskItemIcon category='done'>
+                        <MdUndo/>
+                    </TaskItemIcon>
+                    </>
+                    :
+                    <>
+                    <TaskItemIcon category='done'>
                         <IoMdCheckmark/>
-                </TaskItemIcon>
-                <TaskItemIcon category='edit'>
+                    </TaskItemIcon>
+                    <TaskItemIcon category='edit'>
                         <BsPencilFill/>
-                </TaskItemIcon>
+                    </TaskItemIcon>
+                    </>
+                }
                 <TaskItemIcon category='delete'>
                         <MdDelete/>
                 </TaskItemIcon>

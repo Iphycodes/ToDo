@@ -1,15 +1,20 @@
+import axios from 'axios'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { TaskInput } from '../../Components/TaskInput/TaskInput.component'
 import { TaskItemBox } from '../../Components/TaskItemBox/TaskItemBox.component'
 import { MainBackgroundContainer } from '../Login/Login.styled'
 import { HomePageContainer, HomePageTextContainer, LongLine, TodoContainer } from './HomePage.styled'
-import { ShortLine } from './HomePage.styled'
+import { ShortLine } from './HomePage.styled';
+import { useEffect } from 'react';
 
 
 const HomePage = () => {
-
+    const tasks = useSelector((state) => state.tasks.taskItems)
+    
     return (
         <MainBackgroundContainer>
+            {console.log(tasks)}
             <HomePageContainer>
                 <HomePageTextContainer>
                     <h1>Monday</h1>
@@ -22,18 +27,22 @@ const HomePage = () => {
                     <LongLine/>
 
                     <div className='unDoneTasks'>
-                    <TaskItemBox description='Go to the market' time='9:45pm' isDone={false}/>
-                    <TaskItemBox description='Study the Bible' time='10:00pm' isDone={false}/>
+                        {
+                            tasks.map(({id, description, time, isDone}) => (
+                                !isDone ? <TaskItemBox key={id} description={description} time={time} isDone={isDone}/> : null
+                            ))    
+                        }
                     </div>
 
-                
                     <div className="doneTasks">
                     <p>Completed</p>
                     <LongLine/>
-                    <TaskItemBox description='Go to the market' time='9:45pm' isDone={true}/>
-                    <TaskItemBox description='Study the Bible' time='10:00pm' isDone={true}/>
+                    {
+                        tasks.map(({id, description, time, isDone}) => {
+                          return isDone ? <TaskItemBox key={id} description={description} time={time} isDone={isDone}/> : null
+                        })
+                    }
                     </div>
-
 
                 </TodoContainer>
                 

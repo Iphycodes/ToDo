@@ -33,7 +33,7 @@ ${getDoneStyle};
 `
 
 export const TaskItemDescription = styled.div`
-width: 75%;
+width: 60%;
 display: flex;
 flex-direction: column;
 
@@ -49,9 +49,9 @@ p{
 `
 
 export const TaskItemIconsContainer = styled.div`
-width: 25%;
+width: 40%;
 display: flex;
-justify-content: space-between;
+justify-content: flex-end;
 align-items: center;
 `
 
@@ -63,7 +63,13 @@ box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 display: flex;
 justify-content: center;
 align-items: center;
+margin-right: 20px;
 color: ${({category, theme}) => category === 'done' ? theme.colors.green : category === 'edit' ? theme.colors.blue : category === 'reiterate' ? theme.colors.blue : 'red'};
 font-size: ${({category}) => category === 'done' ? '30px' : '20px'};
+
+&:hover{
+    background-color: ${({category, theme}) => category === 'done' ? theme.colors.green : category === 'edit' ? theme.colors.blue : category === 'reiterate' ? theme.colors.blue : 'red'};
+    color: #ffffff;
+}
 
 `
