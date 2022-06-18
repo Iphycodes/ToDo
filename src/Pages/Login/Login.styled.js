@@ -16,7 +16,7 @@ export const MainBackgroundContainer = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
-height: 100vh;
+height: 100%;
 max-width: 100%;
 background-color: #EFF1F8;
 `

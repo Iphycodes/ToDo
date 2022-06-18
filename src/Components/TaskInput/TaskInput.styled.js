@@ -3,8 +3,12 @@ import { css } from "styled-components";
 
 
 const hover = css`
-color: red;
+color: #079E77;
 `
+
+// const hover = css(({theme}) => `
+//     color: ${theme.colors.blue}
+// `)
 
 export const TaskInputContainer = styled.div`
 position: relative;
@@ -12,6 +16,7 @@ display: flex;
 align-items: center;
 width: 100%;
 padding: 0;
+margin-bottom: 30px;
 
 
 span:first-child{
@@ -26,7 +31,7 @@ span:first-child{
 export const ButtonSpan = styled.span(({theme}) => `
     position: absolute;
     right: 3px;
-    bottom: -10px;
+    bottom: -9px;
     font-size: 45px;
     color: ${theme.colors.green};
 

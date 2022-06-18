@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const HomePageContainer = styled.div`
     width: 80%;
     height: auto;
-    margin-top: 20px;
+    margin-top: 50px;
     background-color: #ffffff;
     border: none;
     display: flex;
@@ -19,7 +19,13 @@ export const HomePageTextContainer = styled.div(({theme}) => `
     margin-bottom: 50px;
 
     h1{
-        color: ${theme.colors.green}
+        color: ${theme.colors.green};
+        font-size: 50px;
+        letter-spacing: 15px;
+    }
+
+    p{
+        letter-spacing: 5px;
     }
 
 `)
@@ -30,18 +36,32 @@ export const TodoContainer = styled.div`
     flex-direction: column;
     height: auto;
     padding: 20px;
+
+    .unDoneTasks, .doneTasks{
+        margin-bottom: 30px;
+    }
+
+    .doneTasks{
+        p:first-child{
+            letter-spacing: 10px;
+            color: ${({theme}) => theme.colors.greyFont};
+            font-weight: bold;
+        }
+    }
 `
 
 export const ShortLine = styled.hr`
-    width: 50px;
+    width: 70px;
     background-color: black;
     margin: auto;
     height: 3px;
+    margin-bottom: 10px;
 
 `
 
 export const LongLine = styled(ShortLine)`
-    width: 95%;
+    width: 100%;
     height: 2px;
     background-color: ${({theme}) => theme.colors.greyFont};
+    margin-bottom: 30px;
 `

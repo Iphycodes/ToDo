@@ -14,7 +14,9 @@ function App() {
       green: '#06D6A0',
       inputColor: '#FAFAFF',
       greyFont: '#838383',
-      redFont: 'red'
+      redFont: 'red',
+      blue: '#2ECDFF',
+      darkGreen: '#079E77'
   }
   }
 
