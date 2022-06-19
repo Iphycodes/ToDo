@@ -21,7 +21,7 @@ const INITIAL_STATE = {
 const addTaskItem = (taskItems, itemToAdd) => {
     const existingItem = taskItems.find(taskItem => taskItem.description === itemToAdd.description)
     
-    return existingItem ? null : [...taskItems, {...itemToAdd, id:Date.now}]
+    return existingItem ? null : [...taskItems, itemToAdd]
 }
 
 const editTaskItem = (taskItems, itemToEdit) => {
