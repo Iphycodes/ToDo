@@ -27,9 +27,15 @@ const HomePage = () => {
                     <LongLine/>
 
                     <div className='unDoneTasks'>
-                        {
+                        {/* {
                             tasks.map(({id, description, time, isDone}) => (
                                 !isDone ? <TaskItemBox key={id} description={description} time={time} isDone={isDone}/> : null
+                            ))    
+                        } */}
+
+                        {
+                            tasks.map((taskItem, {id, isDone}) => (
+                                !isDone ? <TaskItemBox key={id} taskItem={taskItem}/> : null
                             ))    
                         }
                     </div>

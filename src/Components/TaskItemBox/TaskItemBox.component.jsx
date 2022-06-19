@@ -3,9 +3,13 @@ import { TaskItemBoxContainer, TaskItemDescription, TaskItemIcon, TaskItemIconsC
 import { IoMdCheckmark, IoIosUndo } from "react-icons/io";
 import { MdDelete, MdUndo } from "react-icons/md";
 import { BsPencilFill } from "react-icons/bs";
-import {GrUndo} from 'react-icons/gr'
+import {useDispatch} from 'react-redux'
+import { doTask } from "../../Redux/Tasks/Task.reducer";
 
-export const TaskItemBox = ({description, time, isDone}) => {
+
+export const TaskItemBox = ({description, time, isDone} = taskItem) => {
+    const dispatch = useDispatch()
+
 
     return (
         <TaskItemBoxContainer isDone={isDone}>
@@ -24,7 +28,7 @@ export const TaskItemBox = ({description, time, isDone}) => {
                     </>
                     :
                     <>
-                    <TaskItemIcon category='done'>
+                    <TaskItemIcon category='done' onClick={() => dispatch(doTask())}>
                         <IoMdCheckmark/>
                     </TaskItemIcon>
                     <TaskItemIcon category='edit'>
