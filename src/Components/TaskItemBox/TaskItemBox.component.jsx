@@ -1,15 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { TaskItemBoxContainer, TaskItemDescription, TaskItemIcon, TaskItemIconsContainer } from "./TaskItemBox.styled";
 import { IoMdCheckmark } from "react-icons/io";
 import { MdDelete, MdUndo } from "react-icons/md";
 import { BsPencilFill } from "react-icons/bs";
 import {useDispatch} from 'react-redux'
-import { deleteTask, switchDoTask } from "../../Redux/Tasks/Task.reducer";
+import { deleteTask, setItemToEdit, switchDoTask } from "../../Redux/Tasks/Task.reducer";
+import { useSelector } from "react-redux";
+import { toggleIsNew } from "../../Redux/IsNewStatus/IsNewStatus.reducer";
 
-
-export const TaskItemBox = ({id, description, time, isDone}) => {
+export const TaskItemBox = ({id, description, time, isDone, setInputValue}) => {
     const dispatch = useDispatch()
-    const reference = useRef()
+    const isNew = useSelector(state => state.isNewStatus.isNew)
+    
 
     const taskItem = {
         id:id,
@@ -20,7 +22,6 @@ export const TaskItemBox = ({id, description, time, isDone}) => {
 
     const handleClick = () => {
 
-        console.log(reference.current)
         dispatch(switchDoTask(taskItem))
     }
 
@@ -36,7 +37,7 @@ export const TaskItemBox = ({id, description, time, isDone}) => {
                 {
                     isDone ? 
                     <>
-                    <TaskItemIcon ref={reference} category='done' onClick={() => handleClick()}>
+                    <TaskItemIcon category='done' onClick={() => handleClick()}>
                         <MdUndo/>
                     </TaskItemIcon>
                     </>
@@ -45,7 +46,14 @@ export const TaskItemBox = ({id, description, time, isDone}) => {
                     <TaskItemIcon category='done' onClick={() => handleClick()}>
                         <IoMdCheckmark/>
                     </TaskItemIcon>
-                    <TaskItemIcon category='edit'>
+                    <TaskItemIcon category='edit' onClick={() => {
+                        if(isNew){
+                            dispatch(toggleIsNew())
+                        }
+                        
+                        dispatch(setItemToEdit(taskItem))
+                        setInputValue(description)
+                        }}>
                         <BsPencilFill/>
                     </TaskItemIcon>
                     </>

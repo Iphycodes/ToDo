@@ -3,10 +3,10 @@ import { css } from "styled-components";
 
 
 const hover = css`
-color: #079E77;
-box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 
 `
+
+
 
 // const hover = css(({theme}) => `
 //     color: ${theme.colors.blue}
@@ -30,7 +30,7 @@ span:first-child{
 }
 `
 
-export const ButtonSpan = styled.span(({theme}) => `
+export const ButtonSpan = styled.span(({theme, cat}) => `
     position: absolute;
     right: 3px;
     bottom: 1px;
@@ -41,10 +41,23 @@ export const ButtonSpan = styled.span(({theme}) => `
     color: ${theme.colors.green};
     border-radius: 50%;
 
+    &.edit{
+        font-size: 58px;
+        bottom: -3px;
+        right: -2px;
+        color: ${theme.colors.blue}
+       
+    }
 
     &:hover{
-        ${hover};
+        color: ${cat === "new" ? '#079E77' : '#17B1E1'};
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
     }
+
+    
+
+
+    
 `)
   
 

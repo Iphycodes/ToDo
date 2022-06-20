@@ -3,10 +3,10 @@ import axios from "axios";
 import TASKS_DATA from "./TASKS_DATA";
 
 
-// const getData = async () => {
-//     const response = await axios.get('/TASKS_DATA.json').then(res => res.data)
-//     return response;
-// }
+export const getData = async () => {
+    const response = await axios.get('/TASKS_DATA.json').then(res => res.data)
+    return response;
+}
 
 // ((async () => {
 //     const response = await axios.get('/TASKS_DATA.json').then(res => res.data)
@@ -14,7 +14,8 @@ import TASKS_DATA from "./TASKS_DATA";
 // })())
 
 const INITIAL_STATE = {
-    taskItems : TASKS_DATA
+    taskItems : [],
+    itemToEdit: {}
 }
 
 
@@ -25,7 +26,7 @@ const addTaskItem = (taskItems, itemToAdd) => {
 }
 
 const editTaskItem = (taskItems, itemToEdit, editedItem) => {
-    return taskItems.map(taskItem => taskItem.id === itemToEdit.id ? {editedItem} : taskItem)
+    return taskItems.map(taskItem => taskItem.id === itemToEdit.id ? editedItem : taskItem)
 
 }
 
@@ -49,18 +50,21 @@ const TaskSlice = createSlice(
                 state.taskItems = addTaskItem(state.taskItems, action.payload)
             },
             editTask: (state, action) => {
-                state.taskItems = editTaskItem(state.taskItems, action.payload)
+                state.taskItems = editTaskItem(state.taskItems, state.itemToEdit, action.payload)
             },
             deleteTask: (state, action) => {
                 state.taskItems = deleteTaskItem(state.taskItems, action.payload)
             },
             switchDoTask: (state, action) => {
                 state.taskItems = switchDoneItem(state.taskItems, action.payload)
+            },
+            setItemToEdit: (state, action) => {
+                state.itemToEdit = action.payload;
             }
         }
     }
 )
 
-export const {addTask, editTask, deleteTask, switchDoTask} = TaskSlice.actions;
+export const {addTask, editTask, deleteTask, switchDoTask, setItemToEdit} = TaskSlice.actions;
 
 export default TaskSlice.reducer;

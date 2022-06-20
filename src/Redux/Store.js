@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import IsNewStatusReducer from "./IsNewStatus/IsNewStatus.reducer";
 import TaskReducer from "./Tasks/Task.reducer";
 
 
 export const store = configureStore({
     reducer: {
-        tasks: TaskReducer
+        tasks: TaskReducer,
+        isNewStatus: IsNewStatusReducer
     }
 })
