@@ -34,8 +34,8 @@ const HomePage = () => {
                         } */}
 
                         {
-                            tasks.map((taskItem, {id, isDone}) => (
-                                !isDone ? <TaskItemBox key={id} taskItem={taskItem}/> : null
+                            tasks.map(({id, isDone, description, time }) => (
+                                !isDone ? <TaskItemBox key={id} id={id} isDone={isDone} description={description} time={time}/> : null
                             ))    
                         }
                     </div>
@@ -45,7 +45,7 @@ const HomePage = () => {
                     <LongLine/>
                     {
                         tasks.map(({id, description, time, isDone}) => {
-                          return isDone ? <TaskItemBox key={id} description={description} time={time} isDone={isDone}/> : null
+                          return isDone ? <TaskItemBox key={id} id = {id} description={description} time={time} isDone={isDone}/> : null
                         })
                     }
                     </div>
