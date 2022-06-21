@@ -16,7 +16,8 @@ function App() {
       greyFont: '#838383',
       redFont: 'red',
       blue: '#2ECDFF',
-      darkGreen: '#079E77'
+      darkGreen: '#079E77',
+      lightGrey: '#D9D9D9'
   }
   }
 

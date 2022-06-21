@@ -12,7 +12,7 @@ import { AdvertPreview } from "../../Components/AdvertPreview/AdvertPreview.comp
 
 const Login = () => {
 
-    const [login, setLogin] = useState(false);
+    const [login, setLogin] = useState(true);
 
     return (
         <MainBackgroundContainer>

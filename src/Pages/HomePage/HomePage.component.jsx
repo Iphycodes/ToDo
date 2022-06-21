@@ -4,36 +4,29 @@ import { useSelector } from 'react-redux'
 import { TaskInput } from '../../Components/TaskInput/TaskInput.component'
 import { TaskItemBox } from '../../Components/TaskItemBox/TaskItemBox.component'
 import { MainBackgroundContainer } from '../Login/Login.styled'
-import { HomePageContainer, HomePageTextContainer, LongLine, TodoContainer } from './HomePage.styled'
+import { HomePageContainer, HomePageTextContainer, imageBox, LongLine, TodoContainer } from './HomePage.styled'
 import { ShortLine } from './HomePage.styled';
 import { useEffect } from 'react';
 import { useState } from 'react'
 import { getData, getFreshData } from '../../Redux/Tasks/Task.reducer'
+import { ImageBox } from './HomePage.styled'
+
+
 
 const HomePage = () => {
     const tasks = useSelector((state) => state.tasks.taskItems)
     const [inputValue, setInputValue] = useState('')
-
+    const globalInputValue = useSelector(state => state.inputVal.inputValue)
+    const itemToEdit = useSelector(state => state.tasks.itemToEdit)
 
     function handleClick(val){
         setInputValue(val)
-
-        console.log('clciked')
     }
-
-    useEffect(() => {
-    //   const data = getFreshData();
-    //   console.log({data})
-    
-      
-    }, [])
-    
     
     return (
         
         <MainBackgroundContainer>
-            {console.log(inputValue)}
-            {console.log(tasks)}
+            
             <HomePageContainer>
                 <HomePageTextContainer>
                     <h1>Monday</h1>
@@ -42,27 +35,53 @@ const HomePage = () => {
                 </HomePageTextContainer>
 
                 <TodoContainer>
-                    <TaskInput placeholder='Add a Task' name='task' inputValue={inputValue}/>
-                    <LongLine/>
+                    <TaskInput placeholder='Add a Task' name='task' inputValue={inputValue} setInputValue={(val) => handleClick(val)}/>
+
+                    {
+                        tasks.length > 0 ?
+                        (
+                            <>
+                            <LongLine/>
 
                     <div className='unDoneTasks'>
-
                         {
+                            tasks.find(task => task.isDone === false) ?
                             tasks.map(({id, isDone, description, time }) => (
-                                !isDone ? <TaskItemBox key={id} id={id} isDone={isDone} description={description} time={time} setInputValue={(val) => handleClick(val)}/> : null
-                            ))    
+                                !isDone ? <TaskItemBox key={id} id={id} isDone={isDone} description={description} time={time} setInputValue={(val) => handleClick(val)} inputValue={globalInputValue} isEdit={itemToEdit.id === id ? true : false}/> : null
+                            ))
+                            :
+                            (
+                                <div className='empty'>
+                                    <p>
+                                        NOTHING HERE!!!
+                                    </p>
+                                </div>
+                            )        
                         }
                     </div>
 
                     <div className="doneTasks">
-                    <p>Completed</p>
-                    <LongLine/>
                     {
-                        tasks.map(({id, description, time, isDone}) => {
-                          return isDone ? <TaskItemBox key={id} id = {id} description={description} time={time} isDone={isDone} /> : null
-                        })
+                            tasks.find(task => task.isDone === true) ?
+                            (<>
+                            <p>Completed</p>
+                            <LongLine/>
+                            {tasks.map(({id, isDone, description, time }) => (
+                                isDone ? <TaskItemBox key={id} id={id} isDone={isDone} description={description} time={time} setInputValue={(val) => handleClick(val)} inputValue={globalInputValue}/> : null
+                            ))}
+                            </>)
+                            :
+                            null        
                     }
                     </div>
+                    </>
+                    )
+                        :
+                        <div>
+                            <ImageBox imgUrl={process.env.PUBLIC_URL + './Images/task.png'}/>
+                        </div>
+                    }
+                    
 
                 </TodoContainer>
                 

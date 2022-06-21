@@ -3,20 +3,25 @@ import { ButtonSpan, StyledTaskInput, TaskInputContainer } from "./TaskInput.sty
 import {BsListTask, BsPencilFill, BsPlusCircleFill} from 'react-icons/bs'
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { addTask, editTask } from "../../Redux/Tasks/Task.reducer";
+import { addTask, editTask, setItemToEdit } from "../../Redux/Tasks/Task.reducer";
 import {AiFillPlusCircle} from 'react-icons/ai'
+import { toggleIsNew } from "../../Redux/IsNewStatus/IsNewStatus.reducer";
+import { setGloInputValue } from "../../Redux/InputValue/InputValue.reducer";
 
-export const TaskInput = ({placeholder, name, inputValue}) => {
+export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
     const [newTask, setNewTask] = useState('');
     const isNew = useSelector((state) => state.isNewStatus.isNew);
     const [editedTask, setEditedTask] = useState('');
     const inputRef = useRef();
     const dispatch = useDispatch();
     const itemToEdit = useSelector(state => state.tasks.itemToEdit);
-
+    const globalInputValue = useSelector(state => state.inputVal.inputValue)
     
     function handleChange(){
         const inputVal = inputRef.current.value
+        dispatch(setGloInputValue(inputVal))
+        setInputValue(inputVal)
+
         isNew ? setNewTask(inputVal) : setEditedTask(inputVal)
 
     }
@@ -38,6 +43,8 @@ export const TaskInput = ({placeholder, name, inputValue}) => {
          dispatch(addTask(newTaskItem))
 
          inputRef.current.value = ''
+
+         dispatch(setItemToEdit({}))
     }
 
    
@@ -49,21 +56,25 @@ export const TaskInput = ({placeholder, name, inputValue}) => {
 
         dispatch(editTask(editingTaskItem))
 
+
+        dispatch(toggleIsNew())
+
+        dispatch(setItemToEdit({}))
+
+        inputRef.current.value = ''
         
    }
 
    useEffect(() => {
        isNew ? 
-    //    inputRef.current.value = ''
     console.log('show is new')
        :
-    //    inputRef.current.value = inputValue
+    
     inputRef.current.value = inputValue
    }, [inputValue])
 
     return (
         <>
-        {/* {console.log(newTask)} */}
         <TaskInputContainer>
         <span>
             <BsListTask/>

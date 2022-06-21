@@ -23,11 +23,16 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 5px;
+background-color:  ${({isEdit}) => isEdit ? '#ECFAFF' : '#ffffff'}; 
 
 ${getDoneStyle};
 
 &:hover{
     box-shadow: ${({isDone}) => !isDone ? '0px 2px 8px rgba(0, 0, 0, 0.15)' : 'none'};
+}
+
+@media only screen and (max-width: 768px) {
+    padding: 10px 5px;
 }
 
 `
@@ -40,11 +45,20 @@ flex-direction: column;
 h2{
     color: ${({theme}) => theme.colors.green};
     font-size: 20px;
+
+    @media only screen and (max-width: 768px){
+        font-size: 16px
+    }
 }
 
 p{
     color: ${({theme}) => theme.colors.greyFont};
     font-size: 16px;
+
+    @media only screen and (max-width: 768px){
+        font-size: 12px
+    }
+
 }
 `
 
@@ -66,6 +80,13 @@ align-items: center;
 margin-right: 20px;
 color: ${({category, theme}) => category === 'done' ? theme.colors.green : category === 'edit' ? theme.colors.blue : category === 'reiterate' ? theme.colors.blue : 'red'};
 font-size: ${({category}) => category === 'done' ? '30px' : '20px'};
+
+@media only screen and (max-width: 768px){
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    font-size: ${({category}) => category === 'done' ? '20px' : '15px'}; 
+}
 
 &:hover{
     background-color: ${({category, theme}) => category === 'done' ? theme.colors.green : category === 'edit' ? theme.colors.blue : category === 'reiterate' ? theme.colors.blue : 'red'};

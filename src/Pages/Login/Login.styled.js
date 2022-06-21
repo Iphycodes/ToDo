@@ -19,6 +19,10 @@ align-items: center;
 height: 100%;
 max-width: 100%;
 background-color: #EFF1F8;
+min-height:100vh;
+padding: 0;
+
+
 `
 
 export const MainContainer = styled.div`
@@ -27,10 +31,17 @@ align-items: center;
 justify-content: center;
 background-color: #ffffff;
 width: 60%;
-height: 80%;
+height: 80vh;
 border-radius: 30px;
 
 ${InvertedStyle}
+
+@media only screen and (max-width: 768px){
+    width: 100%;
+    height: 100vh;
+    padding: 0 20px;
+    border-radius: 0;
+}
 `
 
 export const AdvertContainer = styled.div`
@@ -42,6 +53,11 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+
+
+@media only screen and (max-width: 768px){
+    display: none;
+}
 
 
 
@@ -57,6 +73,11 @@ justify-content: flex-start;
 flex-direction: column;
 position: relative;
 color: #838383;
+
+@media only screen and (max-width: 768px){
+    width: 100%;
+    border-radius: 0;
+}
 `
 
 export const TextContainer = styled.div`
@@ -91,6 +112,10 @@ form{
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media only screen and (max-width: 768px){
+    width: 100%;
+}
 }
 `
 

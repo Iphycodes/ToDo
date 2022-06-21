@@ -4,7 +4,7 @@ import { AdvertBodyContainer, AdvertHeaderContainer, AdvertImage, MainAdvertCont
 
 export const Advert = ({advertDatum}) => {
 
-    const {imageName, heading, description} = advertDatum ?? {};
+    const {imageName, heading, description} = advertDatum ;
     
     return (
         <MainAdvertContainer>

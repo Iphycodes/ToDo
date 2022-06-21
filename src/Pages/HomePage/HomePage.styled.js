@@ -10,6 +10,15 @@ export const HomePageContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 50px;
+    overflow-x: hidden;
+
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+        padding: 50px 0;
+        margin: 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
 `
 
 export const HomePageTextContainer = styled.div(({theme}) => `
@@ -22,10 +31,19 @@ export const HomePageTextContainer = styled.div(({theme}) => `
         color: ${theme.colors.green};
         font-size: 50px;
         letter-spacing: 15px;
+
+        @media only screen and (max-width: 768px){
+        font-size: 40px;
+        letter-spacing: 12px;
+        }
     }
 
     p{
         letter-spacing: 5px;
+
+        @media only screen and (max-width: 768px){
+        letter-spacing: 2px;
+        }
     }
 
 `)
@@ -36,9 +54,21 @@ export const TodoContainer = styled.div`
     flex-direction: column;
     height: auto;
     padding: 20px;
+    
 
     .unDoneTasks, .doneTasks{
         margin-bottom: 30px;
+    }
+
+    .unDoneTasks{
+        .empty{
+         text-align: center;
+         padding: 10px;
+         background-color: ${({theme}) => theme.colors.lightGrey};
+         font-size: 16px;
+         font-weight: bold; 
+         color: ${({theme}) => theme.colors.greyFont}; 
+        }
     }
 
     .doneTasks{
@@ -48,6 +78,26 @@ export const TodoContainer = styled.div`
             font-weight: bold;
             margin-bottom: 10px;
         }
+    }
+
+   
+    
+`
+
+export const ImageBox = styled.div`
+    background-image: ${({imgUrl}) => `url(${imgUrl})`};
+    width: 400px;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    padding: 10px;
+    opacity: 0.5;
+    margin: auto;
+
+    @media only screen and (max-width: 768px){
+        width: 200px;
+        height: 200px;
+
     }
 `
 
