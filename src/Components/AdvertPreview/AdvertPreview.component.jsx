@@ -6,7 +6,7 @@ import { AdvertButton, AdvertButtonsContainer, AdvertPreviewContainer } from "./
 
 export const AdvertPreview = () => {
 
-    const [advertData, setAdvertData] = useState([])
+    const [advertData, setAdvertData] = useState(null)
     const [current, setCurrent] = useState(0)
     const [newId, setNewId] = useState(0)
 
@@ -14,7 +14,7 @@ export const AdvertPreview = () => {
     useEffect(() => {
         axios.get('/ADVERT_DATA.json')
         .then(response => {
-            setAdvertData(response.data)
+            setAdvertData(response?.data)
         })
     }, [])
 
@@ -34,12 +34,12 @@ export const AdvertPreview = () => {
         <>
         <AdvertPreviewContainer>
             {
-                <Advert advertDatum={advertData[current]}/>
+                <Advert advertDatum={advertData?.[current]}/>
             }
             
             <AdvertButtonsContainer>
                 {
-                    advertData.map(({id}) => (
+                    advertData?.map(({id}) => (
                         <span key={id} ><AdvertButton onClick= {()=>setCurrent(id)}/></span>
                     ))
                 }

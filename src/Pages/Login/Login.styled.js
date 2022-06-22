@@ -33,6 +33,7 @@ background-color: #ffffff;
 width: 60%;
 height: 80vh;
 border-radius: 30px;
+transition: flex-direction 5s linear 3s;
 
 ${InvertedStyle}
 
@@ -73,6 +74,7 @@ justify-content: flex-start;
 flex-direction: column;
 position: relative;
 color: #838383;
+transition: flex 5s ease-in-out 3s;
 
 @media only screen and (max-width: 768px){
     width: 100%;
@@ -87,6 +89,10 @@ flex-direction: column;
 column-gap: 0;
 row-gap: 5px;
 margin-top: 40px;
+
+&.sign-up-text{
+    margin-top: 70px;
+}
 
 h1{
     margin-bottom: 0;
@@ -116,6 +122,10 @@ form{
     @media only screen and (max-width: 768px){
     width: 100%;
 }
+
+.sign-up-btn{
+    margin-top: 30px;
+}
 }
 `
 
@@ -139,8 +149,10 @@ font-weight: bold;
 }
 
 `
-export const ForgetPassword = styled(Link)`
+export const ForgetPassword = styled.span`
 text-decoration: none;
+color: #15A4D1;
+cursor: pointer;
 
 &:hover{
     text-decoration: underline;
@@ -156,8 +168,15 @@ color: #838383;
 position: absolute;
 bottom: 10px;
 
-a{
-    font-weight: bold;
-    text-decoration: none;
+span{
+    
+    color: #15A4D1;
+    cursor: pointer;
+
+    &:hover{
+        text-decoration: underline;
+        font-weight: bold;
+    }
 }
+
 `

@@ -2,7 +2,7 @@ import React from "react";
 import { InputContainer, StyledInput } from "./InputBox.styled";
 
 
-export const InputBox = ({placeholder, type, name, value, children}) => {
+export const InputBox = ({placeholder, type, name, value, children, handleChange}) => {
 
     return (
 
@@ -13,6 +13,7 @@ export const InputBox = ({placeholder, type, name, value, children}) => {
             type={type}
             name={name}
             value={value}
+            onChange = {handleChange}
             />
             <span>
                 {children}

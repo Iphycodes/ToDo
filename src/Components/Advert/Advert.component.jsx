@@ -4,16 +4,15 @@ import { AdvertBodyContainer, AdvertHeaderContainer, AdvertImage, MainAdvertCont
 
 export const Advert = ({advertDatum}) => {
 
-    const {imageName, heading, description} = advertDatum ;
     
     return (
         <MainAdvertContainer>
-        <AdvertImage src={process.env.PUBLIC_URL + `/images/${imageName}`} alt='pic'/>
+        <AdvertImage src={process.env.PUBLIC_URL + `/images/${advertDatum?.imageName}`} alt='pic'/>
         <AdvertHeaderContainer>
-            <h2>{heading}</h2>
+            <h2>{advertDatum?.heading}</h2>
         </AdvertHeaderContainer>
         <AdvertBodyContainer>
-            <p>{description}</p>
+            <p>{advertDatum?.description}</p>
         </AdvertBodyContainer>
     </MainAdvertContainer>
     )
