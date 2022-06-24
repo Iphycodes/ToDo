@@ -22,6 +22,7 @@ outline: none;
 border-radius: 5px;
 width: 100%;
 padding: 10px;
+padding-right: 30px;
 font-size: 16px;
 margin-top: 10px;
 

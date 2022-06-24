@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { AdvertContainer, ForgetPassword, FormContainer, FormDiv, LowerDiv, MainBackgroundContainer, MainContainer, TextContainer, LastDiv } from "./Login.styled";
+import React, { useState, useD, useRef } from "react";
+import { AdvertContainer, ForgetPassword, FormContainer, FormDiv, LowerDiv, MainBackgroundContainer, MainContainer, TextContainer, LastDiv, LoadingImage } from "./Login.styled";
 import { Logo } from "../../Components/Logo/Logo.component";
 import { InputBox } from "../../Components/Input/InputBox.component";
 import { CustomButton } from "../../Components/CustomButton/CustomButton.component";
@@ -11,67 +11,173 @@ import { Link } from "react-router-dom";
 import { AdvertPreview } from "../../Components/AdvertPreview/AdvertPreview.component";
 import { auth } from "../../Firebase/Firebase.config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../../Redux/User/User.reducer";
+import { Alert } from "../../Components/Alert/Alert.component";
+import { setAlertStatus, setSignUpAlertStatus } from "../../Redux/AlertStatus/AlertStatus.reducer";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
     const [registerationEmail, setRegisterationEmail] = useState('');
     const [registerationPassword, setRegisterationPassword] = useState('');
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
-    const [currentUser, setCurrentUser] = useState({});
+    const [islogin, setIsLogin] = useState(true);
+    const dispatch = useDispatch();
+    const currentUser = useSelector(state => state.user.currentUser);
+    const alertStatus = useSelector(state => state.alertStatus.alertStatus);
+    const signUpAlertStatus = useSelector(state => state.alertStatus.signUpAlertStatus);
+    const [showLoginSpin, setShowLoginSpin] = useState(false);
+    const [showSignUpSpin, setShowSignUpSpin] = useState(false);
+    const {message, status} = alertStatus ?? {};
+    const {signUpAlertMessage, signUpStatus} = signUpAlertStatus ?? {};
 
-    onAuthStateChanged(auth, (user) => {
-        if(user){
-            setCurrentUser(user);
-            console.log(currentUser)
-        }
-        else{
-            console.log('No user is Signed in')
-        }
-    })
 
     const register = (e) => {
         e.preventDefault();
 
+        setShowSignUpSpin(true)
+
         createUserWithEmailAndPassword(auth, registerationEmail, registerationPassword)
         .then((userCredentails) => {
+            dispatch(setSignUpAlertStatus({
+                signUpAlertMessage: "Account created succesfully",
+                signUpStatus: 'success'
+            }))
+
+            setTimeout(() => {
+                dispatch(setSignUpAlertStatus({
+                    signUpAlertMessage: '',
+                    signUpStatus: ''
+                }))
+
+                setIsLogin(true)
+
+            }, 3000)
+
             const user = userCredentails.user
+
+            console.log(user)
+
+            setShowSignUpSpin(false)
+
+            setLoginEmail('')
+            setRegisterationEmail('')
+            setLoginPassword('')
+            setRegisterationPassword('')
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(`${errorCode}: ${errorMessage}`)
+
+            dispatch(setSignUpAlertStatus({
+                signUpAlertMessage: error.message,
+                signUpStatus: 'danger'
+            }))
+
+            setShowSignUpSpin(false)
         })
     }
 
     const signIn = (e) => {
         e.preventDefault()
 
+        setShowLoginSpin(true)
 
         signInWithEmailAndPassword(auth, loginEmail, loginPassword)
         .then((userCredentails) => {
+
+
+            dispatch(setAlertStatus({
+                message: 'Login successful !!!',
+                status: 'success'
+            }))
+
+            setTimeout(() => {
+                dispatch(setAlertStatus({
+                    message: '',
+                    status: ''
+                }))
+            }, 3000)
+
             const user = userCredentails.user
+
+            dispatch(setCurrentUser(user));
+
+            setShowLoginSpin(false)
         })
         .catch((error) => {
             const message = error.message;
             const errorCode = error.code;
 
+            dispatch(setAlertStatus({
+                message: error.code,
+                status: 'danger'
+            }))
+
             console.log(`${errorCode}: ${message}`)
+
+            setShowLoginSpin(false)
         })
 
     }
 
-    const signout = (e) => {
-        // e.preventDefault();
+    const googleSignIn = (e) => {
+    e.preventDefault()
 
-        signOut(auth)
-        .then(() => console.log('user is signed out'))
-        .catch((error) => console.log(error))
-        
-        
+    const provider = new GoogleAuthProvider()
+
+    auth.languageCode = 'it';
+
+    provider.setCustomParameters({
+        'prompt' : 'select_account'
+    });
+
+   
+
+    signInWithPopup(auth, provider)
+    .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+
+    dispatch(setAlertStatus({
+        message: 'Login successful !!!',
+        status: 'success'
+    }))
+
+    dispatch(setCurrentUser(user));
+
+    setTimeout(() => {
+        dispatch(setAlertStatus({
+            message: '',
+            status: ''
+        }))
+    }, 3000)
+
+    console.log(user)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    console.log(errorMessage)
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+
+    dispatch(setAlertStatus({
+        message: error.code,
+        status: 'danger'
+    }))
+    // ...
+  });
     }
-
-    const [islogin, setIsLogin] = useState(true);
 
     return (
         <MainBackgroundContainer>
@@ -84,6 +190,7 @@ const Login = () => {
                   {
                     islogin ? (
                           <>
+                          
                     <TextContainer>
                         <Logo/>
                         <h1>Hello Again</h1>
@@ -92,10 +199,26 @@ const Login = () => {
                   
                     <FormDiv>
                         <form>
-                            <InputBox placeholder='Email' type='email' name='email'>
+                            <InputBox placeholder='Email' value={loginEmail} type='email' name='email' handleChange={(e) => 
+                            {
+                                setLoginEmail(e.target.value)
+                                dispatch(setAlertStatus({
+                                    message: '',
+                                    status: ''
+                                }))
+                            }
+                            }>
                                 <MdOutlineAlternateEmail/>
                             </InputBox>
-                            <InputBox placeholder='Password' type='password' name='password'>
+                            <InputBox placeholder='Password' type='password' name='password' handleChange={(e) => 
+                                {
+                                    setLoginPassword(e.target.value)
+                                    dispatch(setAlertStatus({
+                                        message: '',
+                                        status: ''
+                                    }))
+                                }
+                                }>
                                 <FaLock/>
                             </InputBox>
                             <LowerDiv>
@@ -111,12 +234,14 @@ const Login = () => {
                                    </ForgetPassword>
                                 </div>
                             </LowerDiv>
-                            <CustomButton>Login</CustomButton>
-                            <CustomButton signInWithGoogle>
+                            <CustomButton onClick={signIn} showIcon={showLoginSpin}>Login</CustomButton>
+                            <CustomButton onClick={googleSignIn} signInWithGoogle>
                                 <FcGoogle className="icon"/>
                                 <span>Sign In With Google</span>
                             </CustomButton>
+                            <Alert message={message} status={status}/>
                         </form>
+                        
                     </FormDiv>
                     <LastDiv>
                         <p>Don't have an account yet? <span onClick={() => setIsLogin(false)}>Sign Up</span></p>
@@ -128,12 +253,12 @@ const Login = () => {
 
                         <TextContainer className="sign-up-text">
                         <Logo/>
-                        <h1>Hello Dear! {currentUser.email}</h1>
+                        <h1>Hello Dear! {currentUser?.email}</h1>
                         <p>Welcome to IphyToDo</p>
                         </TextContainer>
                         <FormDiv>
                         <form>
-                            <InputBox placeholder='Email' type='email' name='email' handleChange={(e) => {
+                            <InputBox value={registerationEmail} placeholder='Email' type='email' name='email' handleChange={(e) => {
                                 setRegisterationEmail(e.target.value)
                                 }}>
                                 <MdOutlineAlternateEmail/>
@@ -145,13 +270,14 @@ const Login = () => {
                                 <FaLock/>
                             </InputBox>
                             
-                            <CustomButton className="sign-up-btn" onClick={register}>Sign Up</CustomButton>
-                            
+                            <CustomButton className="sign-up-btn" onClick={register} showIcon={showSignUpSpin}>Sign Up</CustomButton>
+                            <Alert message={signUpAlertMessage} status={signUpStatus}/>
+                    
                         </form>
                         </FormDiv>
+                        
                         <LastDiv>
                         <p>Already have an account? <span className="span-link" onClick={() => setIsLogin(true)}>Sign In</span></p>
-                        <button onClick={signout}>Logout</button>
                         </LastDiv>
                         </>
                         

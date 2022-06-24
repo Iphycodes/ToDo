@@ -12,6 +12,7 @@ export const HomePageContainer = styled.div`
     padding: 50px;
     overflow-x: hidden;
 
+
     @media only screen and (max-width: 768px) {
         width: 100%;
         padding: 50px 0;
@@ -26,6 +27,13 @@ export const HomePageTextContainer = styled.div(({theme}) => `
     width: 100%;
     text-align: center;
     margin-bottom: 50px;
+
+    .sign-out{
+        width: 80px;
+        padding: 8px;
+        margin-top: 0;
+        margin: 10px auto;
+    }
 
     h1{
         color: ${theme.colors.green};

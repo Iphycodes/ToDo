@@ -27,6 +27,11 @@ span:first-child{
     bottom: 0;
     font-size: 30px;
     color: #C4C4C4;
+
+    @media only screen and (max-width: 768px){
+        font-size: 24px;
+        bottom: 0px;
+    }
 }
 `
 
@@ -41,11 +46,20 @@ export const ButtonSpan = styled.span(({theme, cat}) => `
     color: ${theme.colors.green};
     border-radius: 50%;
 
+
+    @media only screen and (max-width: 768px){
+        font-size: 34px;
+    }
+
     &.edit{
         font-size: 58px;
         bottom: -3px;
         right: -2px;
-        color: ${theme.colors.blue}
+        color: ${theme.colors.blue};
+
+    @media only screen and (max-width: 768px){
+        font-size: 40px;
+    }
        
     }
 
@@ -72,6 +86,11 @@ export const StyledTaskInput = styled.input(({theme}) => `
     border-radius: 30px;
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
     font-weight: bold;
+
+    @media only screen and (max-width: 768px){
+        padding: 10px 40px;
+        font-size: 14px;
+    }
 `)
 
 

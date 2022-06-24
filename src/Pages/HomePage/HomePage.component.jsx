@@ -10,7 +10,11 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import { getData, getFreshData } from '../../Redux/Tasks/Task.reducer'
 import { ImageBox } from './HomePage.styled'
-
+import { auth } from '../../Firebase/Firebase.config'
+import { signOut } from 'firebase/auth'
+import { CustomButton } from '../../Components/CustomButton/CustomButton.component'
+import { setCurrentUser } from '../../Redux/User/User.reducer'
+import { useDispatch } from 'react-redux'
 
 
 const HomePage = () => {
@@ -18,21 +22,37 @@ const HomePage = () => {
     const [inputValue, setInputValue] = useState('')
     const globalInputValue = useSelector(state => state.inputVal.inputValue)
     const itemToEdit = useSelector(state => state.tasks.itemToEdit)
+    const dispatch = useDispatch();
 
     function handleClick(val){
         setInputValue(val)
     }
+
+    const signout = (e) => {
+        // e.preventDefault();
+
+        signOut(auth)
+        .then(() => {
+            console.log('user is signed out')
+            dispatch(setCurrentUser(null));
+        })
+        .catch((error) => console.log(error))
+    }
+        
     
     return (
         
         <MainBackgroundContainer>
             
             <HomePageContainer>
+                
                 <HomePageTextContainer>
                     <h1>Monday</h1>
                     <ShortLine/>
                     <p>May 18th, 2022</p>
+                    <CustomButton className = 'sign-out' onClick={signout}>Logout</CustomButton>
                 </HomePageTextContainer>
+                
 
                 <TodoContainer>
                     <TaskInput placeholder='Add a Task' name='task' inputValue={inputValue} setInputValue={(val) => handleClick(val)}/>
