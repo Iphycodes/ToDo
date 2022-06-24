@@ -210,7 +210,7 @@ const Login = () => {
                             }>
                                 <MdOutlineAlternateEmail/>
                             </InputBox>
-                            <InputBox placeholder='Password' type='password' name='password' handleChange={(e) => 
+                            <InputBox placeholder='Password' value={loginPassword} type='password' name='password' handleChange={(e) => 
                                 {
                                     setLoginPassword(e.target.value)
                                     dispatch(setAlertStatus({
@@ -263,7 +263,7 @@ const Login = () => {
                                 }}>
                                 <MdOutlineAlternateEmail/>
                             </InputBox>
-                            <InputBox placeholder='Password' type='password' name='password' handleChange={(e) => setRegisterationPassword(e.target.value)}>
+                            <InputBox placeholder='Password' value={registerationPassword} type='password' name='password' handleChange={(e) => setRegisterationPassword(e.target.value)}>
                                 <FaLock/>
                             </InputBox>
                             <InputBox placeholder='Confirm Password' type='password' name='password'>

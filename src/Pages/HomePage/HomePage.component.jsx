@@ -1,14 +1,11 @@
-import axios from 'axios'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { TaskInput } from '../../Components/TaskInput/TaskInput.component'
 import { TaskItemBox } from '../../Components/TaskItemBox/TaskItemBox.component'
 import { MainBackgroundContainer } from '../Login/Login.styled'
-import { HomePageContainer, HomePageTextContainer, imageBox, LongLine, TodoContainer } from './HomePage.styled'
+import { HomePageContainer, HomePageTextContainer, LongLine, TodoContainer } from './HomePage.styled'
 import { ShortLine } from './HomePage.styled';
-import { useEffect } from 'react';
 import { useState } from 'react'
-import { getData, getFreshData } from '../../Redux/Tasks/Task.reducer'
 import { ImageBox } from './HomePage.styled'
 import { auth } from '../../Firebase/Firebase.config'
 import { signOut } from 'firebase/auth'
@@ -29,14 +26,22 @@ const HomePage = () => {
     }
 
     const signout = (e) => {
-        // e.preventDefault();
 
-        signOut(auth)
-        .then(() => {
-            console.log('user is signed out')
-            dispatch(setCurrentUser(null));
-        })
-        .catch((error) => console.log(error))
+        // const confirmation = confirm("Are you sure you want to logout of the acoount?");
+
+        // console.log(confirmation)
+
+        if(window.confirm("Logout?") == true){
+            signOut(auth)
+            .then(() => {
+                console.log('user is signed out')
+                dispatch(setCurrentUser(null));
+            })
+            .catch((error) => console.log(error))
+        }
+
+           
+            
     }
         
     
