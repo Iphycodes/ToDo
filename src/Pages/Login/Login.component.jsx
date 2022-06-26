@@ -16,6 +16,8 @@ import { setCurrentUser } from "../../Redux/User/User.reducer";
 import { Alert } from "../../Components/Alert/Alert.component";
 import { setAlertStatus, setSignUpAlertStatus } from "../../Redux/AlertStatus/AlertStatus.reducer";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { db } from "../../Firebase/Firebase.config";
+import { doc, setDoc } from "firebase/firestore";
 
 const Login = () => {
     const [registerationEmail, setRegisterationEmail] = useState('');
@@ -33,7 +35,7 @@ const Login = () => {
     const {signUpAlertMessage, signUpStatus} = signUpAlertStatus ?? {};
 
 
-    const register = (e) => {
+    const register = async (e) => {
         e.preventDefault();
 
         setShowSignUpSpin(true)
@@ -44,6 +46,8 @@ const Login = () => {
                 signUpAlertMessage: "Account created succesfully",
                 signUpStatus: 'success'
             }))
+
+
 
             setTimeout(() => {
                 dispatch(setSignUpAlertStatus({
@@ -56,6 +60,12 @@ const Login = () => {
             }, 3000)
 
             const user = userCredentails.user
+
+            setDoc(doc(db, "users", user.uid), {
+                displayName: user.displayName,
+                id: user.uid
+              });
+
 
             console.log(user)
 
@@ -103,7 +113,9 @@ const Login = () => {
 
             const user = userCredentails.user
 
-            dispatch(setCurrentUser(user));
+            console.log(user.uid)
+
+            dispatch(setCurrentUser({id: user.uid, displayName: user.displayName}));
 
             setShowLoginSpin(false)
         })

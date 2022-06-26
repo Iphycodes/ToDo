@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { TaskInput } from '../../Components/TaskInput/TaskInput.component'
 import { TaskItemBox } from '../../Components/TaskItemBox/TaskItemBox.component'
@@ -12,7 +12,9 @@ import { signOut } from 'firebase/auth'
 import { CustomButton } from '../../Components/CustomButton/CustomButton.component'
 import { setCurrentUser } from '../../Redux/User/User.reducer'
 import { useDispatch } from 'react-redux'
-
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
+import { setTasks } from '../../Redux/Tasks/Task.reducer'
+import { db } from '../../Firebase/Firebase.config'
 
 const HomePage = () => {
     const tasks = useSelector((state) => state.tasks.taskItems)
@@ -20,6 +22,39 @@ const HomePage = () => {
     const globalInputValue = useSelector(state => state.inputVal.inputValue)
     const itemToEdit = useSelector(state => state.tasks.itemToEdit)
     const dispatch = useDispatch();
+    const currentUser = useSelector(state => state.user.currentUser)
+
+
+
+    useEffect(() => {
+
+        
+        const usersCollectionRef = collection(db, 'users')
+
+        const userId = currentUser.id
+
+        console.log(`The currentUser id is ${userId}`)
+
+        const documentRef = doc(usersCollectionRef, userId)
+
+        const taskCollectionRef = collection(documentRef, 'tasks')
+
+        const getAllTask = async () => {
+
+            const taskItems = await getDocs(taskCollectionRef)
+            dispatch(setTasks((taskItems.docs.map((doc) => ({...doc.data(), idc: doc.id})))))
+
+            console.log((taskItems.docs.map((doc) => ({...doc.data(), idc: doc.id}))))
+
+        }
+
+        getAllTask()
+
+
+
+
+    }, [])
+
 
     function handleClick(val){
         setInputValue(val)
@@ -27,9 +62,6 @@ const HomePage = () => {
 
     const signout = (e) => {
 
-        // const confirmation = confirm("Are you sure you want to logout of the acoount?");
-
-        // console.log(confirmation)
 
         if(window.confirm("Logout?") == true){
             signOut(auth)
@@ -48,6 +80,7 @@ const HomePage = () => {
     return (
         
         <MainBackgroundContainer>
+            {console.log(tasks)}
             
             <HomePageContainer>
                 
@@ -71,8 +104,8 @@ const HomePage = () => {
                     <div className='unDoneTasks'>
                         {
                             tasks.find(task => task.isDone === false) ?
-                            tasks.map(({id, isDone, description, time }) => (
-                                !isDone ? <TaskItemBox key={id} id={id} isDone={isDone} description={description} time={time} setInputValue={(val) => handleClick(val)} inputValue={globalInputValue} isEdit={itemToEdit.id === id ? true : false}/> : null
+                            tasks.map(({idc, id, isDone, description, time }) => (
+                                !isDone ? <TaskItemBox key={id} idc={idc} id={id} isDone={isDone} description={description} time={time} setInputValue={(val) => handleClick(val)} inputValue={globalInputValue} isEdit={itemToEdit.id === id ? true : false}/> : null
                             ))
                             :
                             (
@@ -91,8 +124,8 @@ const HomePage = () => {
                             (<>
                             <p>Completed</p>
                             <LongLine/>
-                            {tasks.map(({id, isDone, description, time }) => (
-                                isDone ? <TaskItemBox key={id} id={id} isDone={isDone} description={description} time={time} setInputValue={(val) => handleClick(val)} inputValue={globalInputValue}/> : null
+                            {tasks.map(({id, idc, isDone, description, time }) => (
+                                isDone ? <TaskItemBox key={id} idc={idc} id={id} isDone={isDone} description={description} time={time} setInputValue={(val) => handleClick(val)} inputValue={globalInputValue}/> : null
                             ))}
                             </>)
                             :

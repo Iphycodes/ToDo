@@ -8,11 +8,13 @@ import { useSelector } from "react-redux";
 import { auth } from "./Firebase/Firebase.config";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "./Redux/User/User.reducer";
+import {doc, setDoc} from 'firebase/firestore'
+import { getTasks } from "./Redux/Tasks/Task.reducer";
+
 
 function App() {
-
-  const currentUser = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.user.currentUser)
 
   const theme = {
     colors: {
@@ -27,21 +29,20 @@ function App() {
   }
 
 
-// onAuthStateChanged(auth, (user) => {
-//     if(user){
-//         dispatch(setCurrentUser(user));
-//         console.log(currentUser)
-//     }
-//     else{
-//         console.log('No user is Signed in')
-//         dispatch(setCurrentUser(null));
-//     }
-// })
+onAuthStateChanged(auth, (user) => {
+    if(user){
+        // dispatch(setCurrentUser(user));
+        console.log(currentUser)
+    }
+    else{
+        console.log('No user is Signed in')
+        dispatch(setCurrentUser(null));
+    }
+})
 
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
-      {console.log(currentUser)}
       <Routes>
         <Route exact path="/" element={currentUser ? <HomePage/> : <Navigate to='/login' replace/>}/>
         <Route exact path="/login" element={currentUser ? <Navigate to='/' replace/> : <Login/>}/>

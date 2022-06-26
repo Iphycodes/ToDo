@@ -1,17 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import TASKS_DATA from "./TASKS_DATA";
 
-
-export const getData = async () => {
-    const response = await axios.get('/TASKS_DATA.json').then(res => res.data)
-    return response;
-}
-
-// ((async () => {
-//     const response = await axios.get('/TASKS_DATA.json').then(res => res.data)
-//     return response;
-// })())
 
 const INITIAL_STATE = {
     taskItems : [],
@@ -20,26 +9,66 @@ const INITIAL_STATE = {
 
 
 const addTaskItem = (taskItems, itemToAdd) => {
+
+    console.log(taskItems)
     const existingItem = taskItems.find(taskItem => taskItem.description === itemToAdd.description)
     
-    return existingItem ? taskItems : [...taskItems, itemToAdd]
+    
+
+    if(existingItem){
+
+        return taskItems
+
+    } else{
+
+        // const taskDoc = doc(db, 'users', itemToEdit.id)
+
+        // await updateDoc(taskDoc, editedItem)
+
+        
+        // addDoc(taskCollectionRef, itemToAdd)
+
+        
+
+        
+        return [...taskItems, itemToAdd]
+       
+    } 
+
+
 }
 
 const editTaskItem = (taskItems, itemToEdit, editedItem) => {
+
+    // const taskDoc = doc(documentRef, 'tasks', itemToEdit.idc)
+
+    // updateDoc(taskDoc, editedItem)
     return taskItems.map(taskItem => taskItem.id === itemToEdit.id ? editedItem : taskItem)
 
 }
 
 const deleteTaskItem = (taskItems, itemToDelete) => {
-    return taskItems.filter(taskItem => taskItem.id !== itemToDelete.id)
+
+    // const taskDoc = doc(documentRef, 'tasks', itemToDelete.idc)
+
+    // deleteDoc(taskDoc)
+    const newTaskItem = taskItems.filter(taskItem => taskItem.id !== itemToDelete.id)
+    return newTaskItem
 }
 
 const switchDoneItem = (taskItems, switchDoneItem) => {
 
     const invertIsDone = !switchDoneItem.isDone
+
+    // const taskDoc = doc(documentRef, 'tasks', switchDoneItem.idc)
+
+    // updateDoc(taskDoc, {isDone: invertIsDone})
+
     return taskItems.map(taskItem => taskItem.id === switchDoneItem.id ? {...switchDoneItem, isDone: invertIsDone}: taskItem)
     
 }
+
+
 
 const TaskSlice = createSlice(
     {
@@ -60,11 +89,14 @@ const TaskSlice = createSlice(
             },
             setItemToEdit: (state, action) => {
                 state.itemToEdit = action.payload;
+            },
+            setTasks: (state, action) => {
+                state.taskItems = action.payload;
             }
         }
     }
 )
 
-export const {addTask, editTask, deleteTask, switchDoTask, setItemToEdit} = TaskSlice.actions;
+export const {addTask, editTask, deleteTask, switchDoTask, setItemToEdit, setTasks} = TaskSlice.actions;
 
 export default TaskSlice.reducer;

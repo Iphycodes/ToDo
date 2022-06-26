@@ -3,10 +3,11 @@ import { ButtonSpan, StyledTaskInput, TaskInputContainer } from "./TaskInput.sty
 import {BsListTask, BsPencilFill, BsPlusCircleFill} from 'react-icons/bs'
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { addTask, editTask, setItemToEdit } from "../../Redux/Tasks/Task.reducer";
-import {AiFillPlusCircle} from 'react-icons/ai'
+import { addTask, editTask, setItemToEdit, setTasks } from "../../Redux/Tasks/Task.reducer";
 import { toggleIsNew } from "../../Redux/IsNewStatus/IsNewStatus.reducer";
 import { setGloInputValue } from "../../Redux/InputValue/InputValue.reducer";
+import { getDocs, collection, doc, addDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../Firebase/Firebase.config";
 
 export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
     const [newTask, setNewTask] = useState('');
@@ -16,6 +17,7 @@ export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
     const dispatch = useDispatch();
     const itemToEdit = useSelector(state => state.tasks.itemToEdit);
     const globalInputValue = useSelector(state => state.inputVal.inputValue)
+    const currentUser = useSelector(state => state.user.currentUser)
     
     function handleChange(){
         const inputVal = inputRef.current.value
@@ -32,19 +34,32 @@ export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
 
     // console.log(Date.now())
 
-    const createNewTask = () => {
+    const createNewTask = async () => {
         const newTaskItem = {
-            id : Date.now(),
+            id: Date.now(),
             description : newTask,
             time : "may 12, 2022",
             isDone : false
          }
 
-         dispatch(addTask(newTaskItem))
+        dispatch(addTask(newTaskItem))
+
+        const usersCollectionRef = collection(db, 'users')
+        const userId = currentUser.id
+        console.log(`The currentUser id is ${userId}`)
+        const documentRef = doc(usersCollectionRef, userId)
+        const taskCollectionRef = collection(documentRef, 'tasks')
+        addDoc(taskCollectionRef, newTaskItem)
+
 
          inputRef.current.value = ''
 
          dispatch(setItemToEdit({}))
+
+         const taskItems = await getDocs(taskCollectionRef)
+
+            // console.log(tasks.data().tasks)
+        dispatch(setTasks(taskItems.docs.map((doc) => ({...doc.data(), idc: doc.id})))) 
     }
 
    
@@ -55,6 +70,17 @@ export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
         }
 
         dispatch(editTask(editingTaskItem))
+
+        const usersCollectionRef = collection(db, 'users')
+        const userId = currentUser.id
+        console.log(`The currentUser id is ${userId}`)
+        const documentRef = doc(usersCollectionRef, userId)
+        const taskCollectionRef = collection(documentRef, 'tasks')
+        
+        const taskDoc = doc(documentRef, 'tasks', itemToEdit.idc)
+
+        updateDoc(taskDoc, editingTaskItem)
+        
 
 
         dispatch(toggleIsNew())

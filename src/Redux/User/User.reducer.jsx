@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 
 
 const INITIAL_STATE = {
     currentUser: null
+}
+
+export const GetUsers = () => {
+    const dispatch = useDispatch()
+
+    console.log(dispatch(getCurrentUser()))
 }
 
 const userSlice = createSlice(
@@ -12,11 +19,14 @@ const userSlice = createSlice(
     reducers: {
         setCurrentUser: (state, action) => {
             state.currentUser = action.payload;
+        },
+        getCurrentUser: (state) => {
+            return state.currentUser
         }
     }
 }
 )
 
-export const {setCurrentUser} = userSlice.actions;
+export const {setCurrentUser, getCurrentUser} = userSlice.actions;
 
 export default userSlice.reducer;

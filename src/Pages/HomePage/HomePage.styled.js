@@ -62,6 +62,7 @@ export const TodoContainer = styled.div`
     flex-direction: column;
     height: auto;
     padding: 20px;
+    /* overflow-y: scroll; */
     
 
     .unDoneTasks, .doneTasks{
