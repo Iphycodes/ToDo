@@ -76,7 +76,7 @@ const HomePage = () => {
           const hours = mainDate.getUTCHours()
           const minuites = mainDate.getUTCMinutes()
           const todaysDate = `${year} ${months[month]} ${day}`
-          const timeLiteral = `${hours === 0 ? 12 : hours < 10 ? `$0{hours}` : hours}:${minuites < 10 ? `0${minuites}`: minuites} ${hours < 12 ? 'AM' : "PM"}`          
+          const timeLiteral = `${hours === 0 ? 12 : hours < 10 ? `0${hours}` : hours}:${minuites < 10 ? `0${minuites}`: minuites} ${hours < 12 ? 'AM' : "PM"}`          
           setDateString(`${todaysDate} ${timeLiteral}`)
           
         })
