@@ -1,20 +1,22 @@
 [
     {
         "id": 0,
-        "imageName": "bigTime.png",
+        "imageName": "./Images/bigTime.png",
         "heading": "Heading1",
         "description": "description1"
     },
     {
         "id": 1,
-        "imageName": "girlTime.png",
+        "imageName": "./Images/girlTime.png",
         "heading": "Heading2",
         "description": "description2"
     },
     {
         "id": 2,
-        "imageName": "plentyTime.png",
+        "imageName": "./Images/plentyTime.png",
         "heading": "Heading3",
         "description": "description3"
     }
 ]
+
+
