@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
 
+
+
+
+
+
 export const HomePageContainer = styled.div`
     width: 80%;
     height: auto;
@@ -48,6 +53,7 @@ export const HomePageTextContainer = styled.div(({theme}) => `
 
     p{
         letter-spacing: 5px;
+        font-family: 'Roboto', sans-serif;
 
         @media only screen and (max-width: 768px){
         letter-spacing: 2px;

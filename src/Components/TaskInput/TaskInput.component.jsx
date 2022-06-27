@@ -92,12 +92,9 @@ export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
    }
 
    useEffect(() => {
-       isNew ? 
-    console.log('show is new')
-       :
-    
-    inputRef.current.value = inputValue
-   }, [inputValue])
+        isNew ? console.log('') : inputRef.current.value = inputValue
+   }
+       , [inputValue])
 
     return (
         <>
@@ -108,12 +105,12 @@ export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
         <StyledTaskInput ref={inputRef} onChange={() => handleChange()} placeholder={placeholder} name={name}/>
         {
             isNew ?
-            <ButtonSpan className="new" cat="new">
-                <BsPlusCircleFill onClick={() => createNewTask()}/> 
+            <ButtonSpan className="new" cat="new" disabled={true}>
+                <BsPlusCircleFill onClick={() => inputRef.current.value === '' ? null : createNewTask()}/> 
             </ButtonSpan>
             :
             <ButtonSpan className="edit" cat="edit">
-                <IoIosCheckmarkCircle onClick={() => handleEditTaskItem()}/>
+                <IoIosCheckmarkCircle onClick={() => inputRef.current.value === '' ? null : handleEditTaskItem()}/>
             </ButtonSpan>
         }
         </TaskInputContainer>

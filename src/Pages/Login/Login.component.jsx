@@ -1,4 +1,4 @@
-import React, { useState, useD, useRef } from "react";
+import React, { useState } from "react";
 import { AdvertContainer, ForgetPassword, FormContainer, FormDiv, LowerDiv, MainBackgroundContainer, MainContainer, TextContainer, LastDiv, LoadingImage } from "./Login.styled";
 import { Logo } from "../../Components/Logo/Logo.component";
 import { InputBox } from "../../Components/Input/InputBox.component";
@@ -7,10 +7,9 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import {FaLock} from 'react-icons/fa'
 import { CheckBox } from "../../Components/CheckBox/CheckBox.component";
-import { Link } from "react-router-dom";
 import { AdvertPreview } from "../../Components/AdvertPreview/AdvertPreview.component";
 import { auth } from "../../Firebase/Firebase.config";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../Redux/User/User.reducer";
 import { Alert } from "../../Components/Alert/Alert.component";
@@ -24,6 +23,7 @@ const Login = () => {
     const [registerationPassword, setRegisterationPassword] = useState('');
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [islogin, setIsLogin] = useState(true);
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser);
@@ -38,7 +38,8 @@ const Login = () => {
     const register = async (e) => {
         e.preventDefault();
 
-        setShowSignUpSpin(true)
+        if(registerationPassword === confirmPassword){
+            setShowSignUpSpin(true)
 
         createUserWithEmailAndPassword(auth, registerationEmail, registerationPassword)
         .then((userCredentails) => {
@@ -65,10 +66,7 @@ const Login = () => {
                 displayName: user.displayName,
                 id: user.uid
               });
-
-
-            console.log(user)
-
+              
             setShowSignUpSpin(false)
 
             setLoginEmail('')
@@ -88,6 +86,16 @@ const Login = () => {
 
             setShowSignUpSpin(false)
         })
+        }
+        else{
+            dispatch(setSignUpAlertStatus({
+                signUpAlertMessage: "Password does not match with the password confirmation",
+                signUpStatus: 'danger'
+            }))
+            
+        }
+
+        
     }
 
     const signIn = (e) => {
@@ -113,22 +121,16 @@ const Login = () => {
 
             const user = userCredentails.user
 
-            console.log(user.uid)
-
             dispatch(setCurrentUser({id: user.uid, displayName: user.displayName}));
 
             setShowLoginSpin(false)
         })
         .catch((error) => {
-            const message = error.message;
-            const errorCode = error.code;
 
             dispatch(setAlertStatus({
                 message: error.code,
                 status: 'danger'
             }))
-
-            console.log(`${errorCode}: ${message}`)
 
             setShowLoginSpin(false)
         })
@@ -278,7 +280,7 @@ const Login = () => {
                             <InputBox placeholder='Password' value={registerationPassword} type='password' name='password' handleChange={(e) => setRegisterationPassword(e.target.value)}>
                                 <FaLock/>
                             </InputBox>
-                            <InputBox placeholder='Confirm Password' type='password' name='password'>
+                            <InputBox placeholder='Confirm Password' value={confirmPassword} type='password' name='password' handleChange={(e) => setConfirmPassword(e.target.value)}>
                                 <FaLock/>
                             </InputBox>
                             

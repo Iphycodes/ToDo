@@ -10,11 +10,13 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "./Redux/User/User.reducer";
 import {doc, setDoc} from 'firebase/firestore'
 import { getTasks } from "./Redux/Tasks/Task.reducer";
+import axios from "axios";
 
 
 function App() {
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.user.currentUser)
+
 
   const theme = {
     colors: {
@@ -31,7 +33,8 @@ function App() {
 
 onAuthStateChanged(auth, (user) => {
     if(user){
-        // dispatch(setCurrentUser(user));
+      // dispatch(setCurrentUser({id: user.uid, displayName: user.displayName}));
+      // dispatch(setCurrentUser({user}));
         console.log(currentUser)
     }
     else{

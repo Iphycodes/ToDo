@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
 import { setTasks } from '../../Redux/Tasks/Task.reducer'
 import { db } from '../../Firebase/Firebase.config'
+import axios from 'axios'
 
 const HomePage = () => {
     const tasks = useSelector((state) => state.tasks.taskItems)
@@ -23,6 +24,67 @@ const HomePage = () => {
     const itemToEdit = useSelector(state => state.tasks.itemToEdit)
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser)
+    const [dayOfWeek, setDayOfWeek] = useState('')
+    const [dateString, setDateString] = useState('')
+
+    useEffect(() => {
+        axios.get('http://worldclockapi.com/api/json/utc/now')
+        .then(response => {
+            const dateAndTime = response.data
+
+            setDayOfWeek(dateAndTime.dayOfTheWeek)          
+            const date1 = dateAndTime.currentDateTime
+            const date = new Date(date1)
+  
+            const mainDate = new Date(date.getTime() + 1000 * 60 * 60)
+
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  
+            const year = mainDate.getUTCFullYear()
+            const month = mainDate.getUTCMonth()
+            const day = mainDate.getUTCDate()
+            const hours = mainDate.getUTCHours()
+            const minuites = mainDate.getUTCMinutes()
+            const todaysDate = `${year} ${months[0]} ${day}`
+            const timeLiteral = `${hours === 0 ? 12 : hours < 10 ? `0${hours}` : hours}:${minuites < 10 ? `0${minuites}`: minuites} ${hours < 12 ? 'AM' : "PM"}`          
+            setDateString(`${todaysDate} ${timeLiteral}`)
+          
+        })
+        //.catch(error => {
+        //  console.log('failed to return response')
+        //})
+      }, [])
+
+
+      setInterval(() => {
+
+        axios.get('http://worldclockapi.com/api/json/utc/now')
+        .then(response => {
+          const dateAndTime = response.data
+
+          setDayOfWeek(dateAndTime.dayOfTheWeek)          
+          const date1 = dateAndTime.currentDateTime
+          const date = new Date(date1)
+
+          const mainDate = new Date(date.getTime() + 1000 * 60 * 60)
+
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+          const year = mainDate.getUTCFullYear()
+          const month = mainDate.getUTCMonth()
+          const day = mainDate.getUTCDate()
+          const hours = mainDate.getUTCHours()
+          const minuites = mainDate.getUTCMinutes()
+          const todaysDate = `${year} ${months[month]} ${day}`
+          const timeLiteral = `${hours === 0 ? 12 : hours < 10 ? `$0{hours}` : hours}:${minuites < 10 ? `0${minuites}`: minuites} ${hours < 12 ? 'AM' : "PM"}`          
+          setDateString(`${todaysDate} ${timeLiteral}`)
+          
+        })
+        .catch(error => {
+          console.log('failed to return response')
+        })
+
+      }, 60000)
 
 
 
@@ -33,7 +95,6 @@ const HomePage = () => {
 
         const userId = currentUser.id
 
-        console.log(`The currentUser id is ${userId}`)
 
         const documentRef = doc(usersCollectionRef, userId)
 
@@ -44,7 +105,7 @@ const HomePage = () => {
             const taskItems = await getDocs(taskCollectionRef)
             dispatch(setTasks((taskItems.docs.map((doc) => ({...doc.data(), idc: doc.id})))))
 
-            console.log((taskItems.docs.map((doc) => ({...doc.data(), idc: doc.id}))))
+            // console.log((taskItems.docs.map((doc) => ({...doc.data(), idc: doc.id}))))
 
         }
 
@@ -80,14 +141,12 @@ const HomePage = () => {
     return (
         
         <MainBackgroundContainer>
-            {console.log(tasks)}
-            
             <HomePageContainer>
                 
                 <HomePageTextContainer>
-                    <h1>Monday</h1>
+                    <h1>{dayOfWeek}</h1>
                     <ShortLine/>
-                    <p>May 18th, 2022</p>
+                    <p>{dateString}</p>
                     <CustomButton className = 'sign-out' onClick={signout}>Logout</CustomButton>
                 </HomePageTextContainer>
                 
