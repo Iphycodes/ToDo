@@ -7,7 +7,7 @@ export const CustomButton = ({children, showIcon, ...rest}) => {
 
     return(
       <StyledButton {...rest}>
-          {children} {showIcon ? <span><LoadingImage src={process.env.PUBLIC_URL + `/images/spin.gif`}/></span> : null}
+          {children} {showIcon ? <span><LoadingImage src={'./Images/spin.gif'}/></span> : null}
       </StyledButton>
     )
 }

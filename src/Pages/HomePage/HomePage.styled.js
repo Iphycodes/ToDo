@@ -1,11 +1,6 @@
 import styled from 'styled-components'
 
 
-
-
-
-
-
 export const HomePageContainer = styled.div`
     width: 80%;
     height: auto;
@@ -100,7 +95,7 @@ export const TodoContainer = styled.div`
 `
 
 export const ImageBox = styled.div`
-    background-image: ${({imgUrl}) => `url(${imgUrl})`};
+    background-image: url('../../../Images/task.png');
     width: 400px;
     height: 400px;
     background-size: cover;

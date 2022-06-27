@@ -124,7 +124,7 @@ const HomePage = () => {
     const signout = (e) => {
 
 
-        if(window.confirm("Logout?") == true){
+        if(window.confirm("Logout?") === true){
             signOut(auth)
             .then(() => {
                 console.log('user is signed out')
@@ -195,16 +195,18 @@ const HomePage = () => {
                     )
                         :
                         <div>
-                            <ImageBox imgUrl={'../../../public/Images/task.png'}/>
+                            {/* <ImageBox imgUrl={process.env.PUBLIC_URL + `/images/task.png`}/> */}
+                            <ImageBox imgUrl={`../../../public/images/task.png`}/>
                         </div>
                     }
                     
 
                 </TodoContainer>
-                
             </HomePageContainer>
         </MainBackgroundContainer>
     )
 }
+
+// import {} from '../../../public/images/task.png'
 
 export default HomePage;
