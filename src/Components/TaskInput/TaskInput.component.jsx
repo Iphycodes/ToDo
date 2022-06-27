@@ -38,7 +38,7 @@ export const TaskInput = ({placeholder, name, inputValue, setInputValue}) => {
         const newTaskItem = {
             id: Date.now(),
             description : newTask,
-            time : "may 12, 2022",
+            time : "deadline",
             isDone : false
          }
 

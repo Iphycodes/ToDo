@@ -81,7 +81,7 @@ const HomePage = () => {
           
         })
         .catch(error => {
-          console.log('failed to return response')
+          
         })
 
       }, 60000)
