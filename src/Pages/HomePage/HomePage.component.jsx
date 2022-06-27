@@ -195,7 +195,7 @@ const HomePage = () => {
                     )
                         :
                         <div>
-                            <ImageBox imgUrl={process.env.PUBLIC_URL + './Images/task.png'}/>
+                            <ImageBox imgUrl={'../../../public/Images/task.png'}/>
                         </div>
                     }
                     
