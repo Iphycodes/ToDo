@@ -33,6 +33,7 @@ const HomePage = () => {
         .then(response => {
             const dateAndTime = response.data
 
+
             setDayOfWeek(dateAndTime.dayOfTheWeek)          
             const date1 = dateAndTime.currentDateTime
             const date = new Date(date1)
@@ -62,8 +63,6 @@ const HomePage = () => {
         axios.get('http://worldclockapi.com/api/json/utc/now')
         .then(response => {
           const dateAndTime = response.data
-
-          console.log('goodooo')
 
           setDayOfWeek(dateAndTime.dayOfTheWeek)          
           const date1 = dateAndTime.currentDateTime
