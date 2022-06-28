@@ -1,16 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
+import persistReducer from "redux-persist/es/persistReducer";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    whiteList: []
+  }
 
 
 const INITIAL_STATE = {
     currentUser: null
 }
 
-export const GetUsers = () => {
-    const dispatch = useDispatch()
-
-    console.log(dispatch(getCurrentUser()))
-}
 
 const userSlice = createSlice(
     {
@@ -29,4 +32,4 @@ const userSlice = createSlice(
 
 export const {setCurrentUser, getCurrentUser} = userSlice.actions;
 
-export default userSlice.reducer;
+export const persistedUserReducer = persistReducer(persistConfig, userSlice.reducer);

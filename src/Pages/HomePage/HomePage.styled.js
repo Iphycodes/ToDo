@@ -87,6 +87,10 @@ export const TodoContainer = styled.div`
             color: ${({theme}) => theme.colors.greyFont};
             font-weight: bold;
             margin-bottom: 10px;
+
+            @media only screen and (max-width: 768px){
+                letter-spacing: 5px;
+            }
         }
     }
 
@@ -95,7 +99,7 @@ export const TodoContainer = styled.div`
 `
 
 export const ImageBox = styled.div`
-    background-image: url('../../../Images/task.png');
+    background-image: ${({imgUrl}) => `url(${imgUrl})`};
     width: 400px;
     height: 400px;
     background-size: cover;

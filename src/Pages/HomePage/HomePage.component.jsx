@@ -28,6 +28,7 @@ const HomePage = () => {
     const [dateString, setDateString] = useState('')
 
     useEffect(() => {
+
         axios.get('http://worldclockapi.com/api/json/utc/now')
         .then(response => {
             const dateAndTime = response.data
@@ -50,9 +51,9 @@ const HomePage = () => {
             setDateString(`${todaysDate} ${timeLiteral}`)
           
         })
-        //.catch(error => {
-        //  console.log('failed to return response')
-        //})
+        .catch((error) => {
+         console.log(error)
+        })
       }, [])
 
 
@@ -61,6 +62,8 @@ const HomePage = () => {
         axios.get('http://worldclockapi.com/api/json/utc/now')
         .then(response => {
           const dateAndTime = response.data
+
+          console.log('goodooo')
 
           setDayOfWeek(dateAndTime.dayOfTheWeek)          
           const date1 = dateAndTime.currentDateTime

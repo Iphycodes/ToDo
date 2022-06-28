@@ -120,7 +120,7 @@ form{
     align-items: center;
 
     @media only screen and (max-width: 768px){
-    width: 100%;
+    width: 95%;
 }
 
 .sign-up-btn{
@@ -162,11 +162,12 @@ cursor: pointer;
 export const LastDiv = styled.div`
 width: 100%;
 justify-self: flex-end;
+align-self: flex-end;
 text-align: center;
 font-family: candara;
 color: #838383;
 position: absolute;
-bottom: 10px;
+bottom: 5px;
 
 span{
     
